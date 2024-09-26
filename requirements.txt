@@ -1,0 +1,8 @@
+black==24.8.0
+click==8.1.7
+mypy-extensions==1.0.0
+objprint==0.2.3
+packaging==24.1
+pathspec==0.12.1
+platformdirs==4.3.6
+viztracer==0.16.3

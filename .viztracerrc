@@ -1,0 +1,5 @@
+[default]
+log_var = a.* latest
+ignore_c_function = True
+output_file = profiler_output/report.json
+max_stack_depth = 10
