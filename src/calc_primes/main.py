@@ -1,6 +1,7 @@
 """ Check if a number is prime or not using sequential, multithreading, and multiprocessing """
 
 import os
+import logging
 from itertools import batched
 from typing import List
 import random
@@ -8,12 +9,18 @@ from viztracer import VizTracer
 import click
 
 
+logging.basicConfig(level=logging.INFO)
+
 def is_prime(n):
     """Check if a number is prime or not"""
     for i in range(2, n):
         if n % i == 0:
-            return (n, False)
-    return (n, True)
+            result = (n, False)
+    result = (n, True)
+    
+    #logging.info(f"Number: {n}, Prime: {result[1]}")
+
+    return result
 
 
 def generate_data(limit: int):
@@ -76,7 +83,7 @@ def check_prime_numbers_multithreading(arr: List[int], threads: int = 8):
 
 
 @click.command()
-@click.option("--limit", default=60000, help="Number of elements in the array")
+@click.option("--limit", default=10000, help="Number of elements in the array")
 @click.option("--mode", default="sequential", help="Mode of execution")
 def run(limit: int, mode: str):
     # Generate random data

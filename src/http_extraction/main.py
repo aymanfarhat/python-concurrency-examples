@@ -1,3 +1,4 @@
+""" A simple script to ping a service using different modes of execution """
 import os
 import logging
 from itertools import batched
@@ -9,13 +10,19 @@ logging.basicConfig(level=logging.INFO)
 load_dotenv()
 
 
-def ping_service_seq(urls: list[str], thread_name: str = "") -> list[str]:
+def ping_service_seq(urls: list[str], thread_name: str = None) -> list[str]:
     """Ping the service sequentially"""
     responses = []
 
     for url in urls:
         response = get(url)
-        logging.info(f"Response: {response.text} via {thread_name}")
+
+        # Log the response
+        if thread_name:
+            logging.info(f"Response: {response.text} via {thread_name}")
+        else:
+            logging.info(f"Response: {response.text}")
+
         responses.append(response.text)
 
     return responses
@@ -71,7 +78,7 @@ def ping_service_multithreading(urls: list[str], threads: int) -> list[str]:
 
 
 @click.command()
-@click.option("--limit", default=200, help="Number of elements in the array")
+@click.option("--limit", default=300, help="Number of elements in the array")
 @click.option("--mode", default="sequential", help="Mode of execution")
 def run(limit: int, mode: str):
     urls = [os.getenv("HTTP_ENDPOINT")] * limit
@@ -81,12 +88,12 @@ def run(limit: int, mode: str):
     start = time.time()
     match mode:
         case "sequential":
-            print(ping_service_seq(urls))
+            ping_service_seq(urls)
         case "multithreading":
-            print(ping_service_multithreading(urls, 8))
+            ping_service_multithreading(urls, 8)
         case "multiprocessing":
             cores = os.cpu_count()
-            print(ping_service_multiprocessing(urls, cores))
+            ping_service_multiprocessing(urls, cores)
         case _:
             raise ValueError("Invalid mode provided")
 
