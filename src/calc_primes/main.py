@@ -83,6 +83,7 @@ def run(limit: int, mode: str):
     num_arr = generate_data(limit)
 
     import time
+
     start = time.time()
     match mode:
         case "sequential":
@@ -95,6 +96,7 @@ def run(limit: int, mode: str):
             raise ValueError("Invalid mode provided")
 
     print(f"Time taken: {time.time() - start}")
+
 
 if __name__ == "__main__":
     run()

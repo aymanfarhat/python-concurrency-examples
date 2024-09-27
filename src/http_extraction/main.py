@@ -8,7 +8,8 @@ from requests import get
 logging.basicConfig(level=logging.INFO)
 load_dotenv()
 
-def ping_service_seq(urls: list[str], thread_name:str="") -> list[str]:
+
+def ping_service_seq(urls: list[str], thread_name: str = "") -> list[str]:
     """Ping the service sequentially"""
     responses = []
 
@@ -19,7 +20,8 @@ def ping_service_seq(urls: list[str], thread_name:str="") -> list[str]:
 
     return responses
 
-def ping_service_multiprocessing(urls: list[str], cores:int) -> list[str]:
+
+def ping_service_multiprocessing(urls: list[str], cores: int) -> list[str]:
     """Ping the service using multiprocessing"""
     from multiprocessing import Pool
 
@@ -36,7 +38,8 @@ def ping_service_multiprocessing(urls: list[str], cores:int) -> list[str]:
 
     return results
 
-def ping_service_multithreading(urls: list[str], threads:int) -> list[str]:
+
+def ping_service_multithreading(urls: list[str], threads: int) -> list[str]:
     """Ping the service using multithreading"""
     from threading import Thread
 
@@ -66,6 +69,7 @@ def ping_service_multithreading(urls: list[str], threads:int) -> list[str]:
 
     return results
 
+
 @click.command()
 @click.option("--limit", default=200, help="Number of elements in the array")
 @click.option("--mode", default="sequential", help="Mode of execution")
@@ -73,6 +77,7 @@ def run(limit: int, mode: str):
     urls = [os.getenv("HTTP_ENDPOINT")] * limit
 
     import time
+
     start = time.time()
     match mode:
         case "sequential":
@@ -86,6 +91,7 @@ def run(limit: int, mode: str):
             raise ValueError("Invalid mode provided")
 
     print(f"Total running time: {time.time() - start}")
+
 
 if __name__ == "__main__":
     # Measure the time taken to run the program
