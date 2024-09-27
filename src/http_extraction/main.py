@@ -67,7 +67,7 @@ def ping_service_multithreading(urls: list[str], threads:int) -> list[str]:
     return results
 
 @click.command()
-@click.option("--limit", default=400, help="Number of elements in the array")
+@click.option("--limit", default=200, help="Number of elements in the array")
 @click.option("--mode", default="sequential", help="Mode of execution")
 def run(limit: int, mode: str):
     urls = [os.getenv("HTTP_ENDPOINT")] * limit
@@ -78,7 +78,7 @@ def run(limit: int, mode: str):
         case "sequential":
             print(ping_service_seq(urls))
         case "multithreading":
-            print(ping_service_multithreading(urls, 20))
+            print(ping_service_multithreading(urls, 8))
         case "multiprocessing":
             cores = os.cpu_count()
             print(ping_service_multiprocessing(urls, cores))
